@@ -65,38 +65,40 @@ export const useCalculadora = () => {
         }
     }
 
-    const cambiarNumPorAnterior = () => {
+    const cambiarNumPorAnterior = (signo: string) => {
         if (numero.endsWith('.')) {
             setNumeroAnterior(numero.slice(0, -1));
         } else {
-            setNumeroAnterior(numero);
+            setNumeroAnterior(numero + signo);
         }       
         setNumero('0');
     }
 
     const btnDividir = () => {
-        cambiarNumPorAnterior();
+        cambiarNumPorAnterior(' / ');
         ultimaOperacion.current = Operadores.dividir;
     }
 
     const btnMultiplicar = () => {
-        cambiarNumPorAnterior();
+        cambiarNumPorAnterior(' * ');
         ultimaOperacion.current = Operadores.multiplicar;
     }
 
     const btnRestar = () => {
-        cambiarNumPorAnterior();
+        cambiarNumPorAnterior(' - ');
         ultimaOperacion.current = Operadores.restar;
     }
 
     const btnSumar = () => {
-        cambiarNumPorAnterior();
+        cambiarNumPorAnterior(' + ');
         ultimaOperacion.current = Operadores.sumar;
     }
 
     const calcular = () => {
         const num1 = Number(numero);
-        const num2 = Number(numeroAnterior);
+        const num2 = Number(numeroAnterior.slice(0, -3));
+        console.log('numeroAnterior.slice(0, -3):', numeroAnterior.slice(0, -3)); 
+        console.log('num2: ', num2);               
 
         switch (ultimaOperacion.current) {
             case Operadores.sumar:
@@ -132,7 +134,7 @@ export const useCalculadora = () => {
             break;
         }
 
-        setNumeroAnterior('0');
+        setNumeroAnterior(numeroAnterior + String(num1));
 
     }
 
